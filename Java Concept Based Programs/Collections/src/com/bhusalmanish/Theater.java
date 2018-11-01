@@ -7,6 +7,23 @@ public class Theater {
     private final String theaterName;
     private List<Seat> seats=new ArrayList<>();
 
+
+    static final Comparator<Seat> PRICE_ORDER;
+
+    static {
+        PRICE_ORDER = new Comparator<Seat>() {
+            public int compare(Seat seat1, Seat seat2) {
+                if (seat1.getPrice() < seat2.getPrice()) {
+                    return -1;
+                } else if (seat1.getPrice() > seat2.getPrice()) {
+                    return 1;
+                } else {
+                    return 0;     // problem - more than one seat can return same price.
+                }
+            }
+        };
+    }
+
     public String getTheaterName() {
         return theaterName;
     }
@@ -52,7 +69,7 @@ public class Theater {
        return seats;
     }
 
-    private class Seat implements Comparable<Seat>{
+    public class Seat implements Comparable<Seat>{
         private final String seatNumber;
         private double price;
         private boolean reserved=false;
